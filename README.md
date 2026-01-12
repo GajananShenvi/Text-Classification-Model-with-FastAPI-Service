@@ -74,10 +74,10 @@ Contains logic to:
 -Preprocess incoming requests
 -Run predictions
 
-# cache.py
+## cache.py
 Utility to cache repeated predictions and speed up responses (if enabled).
 
-# logger.py
+## logger.py
 Central logging setup used throughout the app.
 
 ## 🤖 Model
