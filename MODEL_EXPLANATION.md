@@ -1,79 +1,47 @@
-# Model Explanation & Evaluation 
+# Model Explanation & Evaluation
+
 ---
 
 ## 1. Why PyTorch?
 
-I chose **PyTorch** because:
-
-- It is easy to understand and beginner-friendly
-- Model building feels like normal Python code
-- Debugging is simple
-- It integrates well with FastAPI for inference
-
-Since this project is about building an **end-to-end ML service**, PyTorch helped me clearly separate:
-- model logic
-- inference
-- API deployment
----
-
-## 2. Model Architecture – What Model Did I Choose?
-
-I used a **simple feed-forward neural network** for text classification.
-
-The model consists of:
-- An input layer (text features)
-- One or more hidden layers
-- An output layer that predicts class probabilities
+I used PyTorch because the project required building a **custom text classification model** and serving it through an API. PyTorch made it easy to define the model (`text_model.py`), load trained weights (`artifacts.pth`), and reuse the same model during inference in FastAPI. It also allowed better debugging and control compared to higher-level libraries.
 
 ---
 
-## 3. Why is this model the best choice for your project?
+## 2. What model did you use?
 
-This model is best for my project because:
-
-- The problem is structured text classification
-- The dataset contains fixed categories
-- The API requires fast predictions
-- The project goal is learning + deployment, not heavy research
-
-Instead of using a very complex model, I focused on correct implementation, clean architecture, and production readiness.  
-For this project, a simple model provides reliable performance with low latency, making it the best choice.
-A simple model:
-- Trains faster
-- Is easy to explain
-- Gives stable results
-- Has low API response time
+I used a **simple neural network–based text classification model**.
+Text is first converted into numerical features, which are passed through a feed-forward neural network to predict the class. The model is intentionally simple to keep training, inference, and deployment stable.
 
 ---
 
-## 4. What kind of evaluations did you do on the model?
+## 3. Why is this model suitable for your project?
 
-The model was evaluated using basic but important metrics:
+This model is suitable because:
 
-- **Training Loss**  
-  Observed loss decreasing over epochs to confirm the model was learning.
+* The dataset is structured and category-based
+* The model is lightweight and fast for API inference
+* It avoids unnecessary complexity
+* It integrates cleanly with FastAPI
 
-- **Accuracy**  
-  Measured how many predictions were correct, which is suitable for this classification task.
-
-- **Validation on Unseen Data**  
-  Tested the model on data not used during training to ensure it generalizes and does not memorize.
+For this project, reliability and simplicity were more important than using a heavy model like BERT.
 
 ---
 
-## 3. How good or bad is the model?
+## 4. How did you evaluate the model?
 
-### Good:
-- Performs well on clean, labeled text data
-- Fast and suitable for real-time API predictions
-- Easy to deploy using Docker
-- Stable and consistent in production-like environments
+* Tracked training loss, accuracy, recall, precession and F1-score
+* Stored evaluation results in `metrics.json`
+* Tested predictions using the FastAPI `/predict` endpoint
+* Performed load testing using Locust to check API stability
 
-### Limitations:
-- Does not capture deep language context
-- Performance depends on dataset quality
-- Not suitable for highly complex NLP problems
+This ensured both **model correctness** and **service performance**.
 
-Overall, the model is **good for the intended use case** and clearly demonstrates strong ML fundamentals and deployment skills.
+---
+
+## 5. How good is the model?
+
+The model performs well for basic text classification tasks and responds quickly during inference.
+However, it has limitations in understanding deep context and semantics. Overall, it is **appropriate for the project scope and demonstrates correct ML-to-API deployment workflow**.
 
 ---
