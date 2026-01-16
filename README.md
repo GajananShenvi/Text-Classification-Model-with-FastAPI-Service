@@ -1,93 +1,184 @@
-# Text Classification Model with FastAPI Service 🚀
+# Text Classification Model with FastAPI Service
 
-A RESTful text classification API built with **FastAPI** that serves a trained machine learning model to perform text classification tasks. This project includes Docker support for easy deployment and scaling.
+A **Text Classification REST API** built using **PyTorch** and **FastAPI**.
+This project demonstrates how to train a text classification model and expose it as a scalable web service.
 
----
-
-## 🧠 Project Overview
-
-This repository implements a text classification system using a pre-trained model wrapped inside a FastAPI application. The API exposes inference endpoints that allow users to send text and receive predicted class labels in JSON format.
-
-Key features:
-- Fast and scalable API using FastAPI
-- Modular code structure with inference, caching, and logging
-- Docker + Docker-Compose setup for easy deployment
-- Model loading and prediction logic separated for clarity
+The API accepts raw text as input and returns the predicted class label.
+This project is designed to be **simple, beginner-friendly**, and suitable for **interviews, learning, and deployment**.
 
 ---
 
-## 📁 Repository Structure
+## 🚀 Features
 
-```text
-.
-├── model/                      # Trained model files
-├── performance/                # Performance results / plots (if any)
-├── Docker_File/                # Docker config files (Dockerfile, etc.)
-├── app.py                     # Main FastAPI application
-├── inference.py               # Model inference logic
-├── cache.py                   # Caching utilities
-├── logger.py                  # Logger setup
-├── docker-compose.yml         # Docker-Compose configuration
-├── requirement.txt            # Python dependencies
-└── README.md                  # This file
+* 🧠 Text classification using **PyTorch**
+* ⚡ High-performance REST API with **FastAPI**
+* 📦 Model inference via API endpoint
+* 📊 Easy to test using Swagger UI
+* 🐳 Docker support for deployment
+* 🧪 Load testing support using **Locust**
+
+---
+
+## 🏗️ Project Structure
+
+```
+Text-Classification-Model-with-FastAPI-Service/
+│
+├── __pycache__/                     # Python bytecode cache
+│
+├── dataset/
+│   └── extended_amazon_pro...csv    # Dataset used for training/testing
+│
+├── model/
+│   ├── __pycache__/                 # Model-related cache files
+│   ├── text_model.py                # PyTorch model architecture
+│   ├── artifacts.pth                # Trained model weights
+│   ├── metrics.json                 # Model evaluation metrics
+│   └── train.ipynb                  # Model training notebook
+│
+├── performance/
+│   └── locustfile.py                # Load testing using Locust
+│
+├── app.py                           # FastAPI application entry point
+├── inference.py                     # Model loading & inference logic
+├── cache.py                         # Caching logic for predictions
+├── logger.py                        # Logging configuration
+│
+├── Docker_File                      # Docker configuration file
+├── docker-compose.yml               # Docker Compose configuration
+│
+├── README.md                        # Project documentation
+├── requirement.txt                  # Python dependencies
+
 ```
 
-## 📦 Requirements
+---
 
-Before running the project locally, make sure you have:
+## 🛠️ Tech Stack
 
--Python 3.8+
--Pip package manager
--(Optional for Docker) Docker & Docker-Compose
+* **Python**
+* **PyTorch**
+* **FastAPI**
+* **Uvicorn**
+* **Docker**
+* **Locust**
 
-Install dependencies:  
-pip install -r requirement.txt
+---
 
-## 🚀 Run Locally
+## 📦 Installation
 
-Start the FastAPI server locally:
-uvicorn app:app --reload
+### 1️⃣ Clone the Repository
 
-By default, your API will run at:
+```bash
+git clone https://github.com/GajananShenvi/Text-Classification-Model-with-FastAPI-Service.git
+cd Text-Classification-Model-with-FastAPI-Service
+```
+
+---
+
+### 2️⃣ Create Virtual Environment (Optional but Recommended)
+
+```bash
+python -m venv venv
+source venv/bin/activate   # Linux / Mac
+venv\Scripts\activate      # Windows
+```
+
+---
+
+### 3️⃣ Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## ▶️ Run the FastAPI Server
+
+```bash
+uvicorn app.main:app --reload
+```
+
+Server will start at:
+
+```
 http://127.0.0.1:8000
+```
 
-You can access automatic API docs at:
-http://127.0.0.1:8000/docs
+---
 
+## 📖 API Documentation
 
-## 🐳 Docker Deployment
+FastAPI provides built-in interactive documentation:
 
-Build and run the project using Docker:
-docker build -t text-classification-fastapi .
-docker run -p 8000:8000 text-classification-fastapi
+* **Swagger UI** → [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+* **ReDoc** → [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)
 
+---
 
-Or using docker-compose:
-docker-compose up --build
+## 🔍 API Usage Example
 
-## 🛠️ Code Highlights
-#inference.py
+### Endpoint
 
-Contains logic to:
+```
+POST /predict
+```
 
--Load the saved model
--Preprocess incoming requests
--Run predictions
+### Request Body
 
-## cache.py
-Utility to cache repeated predictions and speed up responses (if enabled).
+```json
+{
+  "text": "This product is really amazing"
+}
+```
 
-## logger.py
-Central logging setup used throughout the app.
+### Response
 
-## 🤖 Model
+```json
+{
+  "prediction": "positive"
+}
+```
 
-Your trained text classification model is stored and loaded from the model/ folder. This can be updated over time with improved models. The API automatically uses whatever model files are in that folder.
+---
 
-## 📈 Performance
+## 🧠 Model Details
 
-If you have evaluation reports, plots, or logs in the performance/ directory, they can help explain how the model performs on test data.
+* The model is trained using **PyTorch**
+* Text data is preprocessed and converted into numerical features
+* The trained model is saved as `artifacts.pth`
+* Model is loaded once at API startup for efficient inference
 
+---
 
+## 🐳 Docker Usage
 
+### Build Docker Image
+
+```bash
+docker build -t text-classifier-api .
+```
+
+### Run Container
+
+```bash
+docker run -p 8000:8000 text-classifier-api
+```
+
+---
+
+## 📈 Load Testing (Locust)
+
+To test performance under load:
+
+```bash
+locust -f performance/locustfile.py
+```
+
+Then open:
+
+```
+http://localhost:8089
+```
 
