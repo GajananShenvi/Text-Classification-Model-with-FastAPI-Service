@@ -27,7 +27,7 @@ class TextRequest(BaseModel):
     text: str
 
 # Caching
-@lru_cache(maxsize=256)
+@lru_cache(maxsize=128)
 def cached_predict(text: str):
     vector = vectorizer.transform([text]).toarray()
     vector = torch.tensor(vector, dtype=torch.float32)
